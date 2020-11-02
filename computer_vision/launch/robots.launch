@@ -15,7 +15,7 @@
   <group ns="robot1_1">
     <param name="tf_prefix" value="robot1_1_tf" />
     <include file="$(find computer_vision)/launch/team_one_robot.launch" >
-      <arg name="init_pose" value="-x 0 -y 1 -z 0" />
+      <arg name="init_pose" value="-x 3.178912 -y 2.025187 -z 0 -Y 3.10" />
       <arg name="robot_name"  value="Robot1_1" />
     </include>
   </group>
@@ -24,7 +24,7 @@
   <group ns="robot1_2">
     <param name="tf_prefix" value="robot1_2_tf" />
     <include file="$(find computer_vision)/launch/team_one_robot.launch" >
-      <arg name="init_pose" value="-x -1 -y 1 -z 0" />
+      <arg name="init_pose" value="-x -0.990448 -y 7.284229 -z 0 -Y -2.59" />
       <arg name="robot_name"  value="Robot1_2" />
     </include>
   </group>
@@ -33,7 +33,7 @@
   <group ns="robot1_3">
     <param name="tf_prefix" value="robot1_3_tf" />
     <include file="$(find computer_vision)/launch/team_one_robot.launch" >
-      <arg name="init_pose" value="-x -2 -y 1 -z 0" />
+      <arg name="init_pose" value="-x -5.445872 -y 1.922345 -z 0 -Y 0.01" />
       <arg name="robot_name"  value="Robot1_3" />
     </include>
   </group>
@@ -43,7 +43,7 @@
   <group ns="robot2_1">
     <param name="tf_prefix" value="robot2_1_tf" />
     <include file="$(find computer_vision)/launch/team_two_robot.launch" >
-      <arg name="init_pose" value="-x 0 -y -1 -z 0" />
+      <arg name="init_pose" value="-x 0 -y -1 -z 0 -Y 1.086893" />
       <arg name="robot_name"  value="Robot2_1" />
     </include>
   </group>
@@ -52,7 +52,7 @@
   <group ns="robot2_2">
     <param name="tf_prefix" value="robot2_2_tf" />
     <include file="$(find computer_vision)/launch/team_two_robot.launch" >
-      <arg name="init_pose" value="-x -1 -y -1 -z 0" />
+      <arg name="init_pose" value="-x -1 -y -1 -z 0 -Y 1.572134" />
       <arg name="robot_name"  value="Robot2_2" />
     </include>
   </group>
@@ -61,7 +61,7 @@
   <group ns="robot2_3">
     <param name="tf_prefix" value="robot2_3_tf" />
     <include file="$(find computer_vision)/launch/team_two_robot.launch" >
-      <arg name="init_pose" value="-x -2 -y -1 -z 0" />
+      <arg name="init_pose" value="-x -2 -y -1 -z 0 -Y 2.189286" />
       <arg name="robot_name"  value="Robot2_3" />
     </include>
   </group>

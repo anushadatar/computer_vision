@@ -1,21 +1,9 @@
 <launch>
-  <arg name="paused" default="false"/>
-  <arg name="use_sim_time" default="true"/>
-  <arg name="gui" default="true"/>
-  <arg name="headless" default="false"/>
-  <arg name="debug" default="false"/>
-
-  <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="debug" value="$(arg debug)" />
-    <arg name="gui" value="$(arg gui)" />
-    <arg name="paused" value="$(arg paused)"/>
-    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
-    <arg name="headless" value="$(arg headless)"/>
-  </include>
+  <param name="/use_sim_time" value="true" />
 
   <!-- start world -->
-  <node name="gazebo_1" pkg="gazebo_ros" type="gazebo" 
-   args="$(find computer_vision)/worlds/empty.world" respawn="false" output="screen" />
+  <node name="gazebo" pkg="gazebo_ros" type="gazebo" 
+   args="$(find computer_vision)/worlds/ball.world" respawn="false" output="screen" />
 
   <!-- start gui -->
   <!-- node name="gazebo_gui" pkg="gazebo" type="gui" respawn="false" output="screen"/-->
