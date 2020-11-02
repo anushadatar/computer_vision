@@ -1,0 +1,64 @@
+<launch>
+  <!-- Launch different robots on two teams -->
+  <param name="team_one_robot_description"
+    command="$(find xacro)/xacro.py $(find turtlebot_description)/robots/kobuki_hexagons_asus_xtion_pro.urdf.xacro" />
+
+  <param name="team_two_robot_description"
+    command="$(find xacro)/xacro '$(find neato_description)/urdf/neato_standalone.urdf.xacro' load_camera:=true use_gpu_laser:=true"/>
+
+  <!-- BEGIN TEAM 1 -->
+  <!-- BEGIN ROBOT 1-->
+  <group ns="robot1_1">
+    <param name="tf_prefix" value="robot1_1_tf" />
+    <include file="$(find computer_vision)/launch/team_one_robot.launch" >
+      <arg name="init_pose" value="-x 0 -y 1 -z 0" />
+      <arg name="robot_name"  value="Robot1_1" />
+    </include>
+  </group>
+
+  <!-- BEGIN ROBOT 2-->
+  <group ns="robot1_2">
+    <param name="tf_prefix" value="robot1_2_tf" />
+    <include file="$(find computer_vision)/launch/team_one_robot.launch" >
+      <arg name="init_pose" value="-x -1 -y 1 -z 0" />
+      <arg name="robot_name"  value="Robot1_2" />
+    </include>
+  </group>
+
+  <!-- BEGIN ROBOT 3-->
+  <group ns="robot1_3">
+    <param name="tf_prefix" value="robot1_3_tf" />
+    <include file="$(find computer_vision)/launch/team_one_robot.launch" >
+      <arg name="init_pose" value="-x -2 -y 1 -z 0" />
+      <arg name="robot_name"  value="Robot1_3" />
+    </include>
+  </group>
+
+  <!-- BEGIN TEAM 2 -->
+  <!-- BEGIN ROBOT 1-->
+  <group ns="robot2_1">
+    <param name="tf_prefix" value="robot2_1_tf" />
+    <include file="$(find computer_vision)/launch/team_two_robot.launch" >
+      <arg name="init_pose" value="-x 0 -y -1 -z 0" />
+      <arg name="robot_name"  value="Robot2_1" />
+    </include>
+  </group>
+
+  <!-- BEGIN ROBOT 2-->
+  <group ns="robot2_2">
+    <param name="tf_prefix" value="robot2_2_tf" />
+    <include file="$(find computer_vision)/launch/team_two_robot.launch" >
+      <arg name="init_pose" value="-x -1 -y -1 -z 0" />
+      <arg name="robot_name"  value="Robot2_2" />
+    </include>
+  </group>
+
+  <!-- BEGIN ROBOT 3-->
+  <group ns="robot2_3">
+    <param name="tf_prefix" value="robot2_3_tf" />
+    <include file="$(find computer_vision)/launch/team_two_robot.launch" >
+      <arg name="init_pose" value="-x -2 -y -1 -z 0" />
+      <arg name="robot_name"  value="Robot2_3" />
+    </include>
+  </group>
+</launch>

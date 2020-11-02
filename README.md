@@ -1,6 +1,16 @@
 # FA20 Computational Robotics: Computer Vision
 *Anusha Datar and Siddharth Garimella*
 
+## Setup
+
+May need to look through launch scripts to fix python version.
+```
+sudo apt-get install ros-<distrib>-gazebo-ros ros-<distrib>-turtlebot
+chmod u+x <all scripts>
+./launch_world.sh
+./launch_teams.sh
+```
+
 ## Goal
 What was the goal of your project? Since everyone is doing a different project, you will have to spend some time setting this context.
 

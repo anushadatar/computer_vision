@@ -1,0 +1,14 @@
+<launch>
+  <arg name="robot_name"/>
+  <arg name="init_pose"/>
+  
+  <node pkg="gazebo_ros" type="spawn_model" name="spawn_$(arg robot_name)" args="$(arg init_pose) -unpause -urdf -param /team_two_robot_description -z 0.1 -model $(arg robot_name)" respawn="false" output="screen"/>
+  <node pkg="neato_gazebo" type="simulator_adapter.py" name="simulator_adapter"/> 
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+    <param name="publish_frequency" type="double" value="30.0" />
+  </node>
+  <node pkg="neato_node" type="scan_to_pc2" name="pc2publisher"/>  
+  <node pkg="topic_tools" type="relay" name="scan_relayer" args="scan stable_scan"/>  
+  
+  <node pkg="nodelet" type="nodelet" name="$(arg robot_name)_nodelet_manager" args="manager"/>
+</launch>
