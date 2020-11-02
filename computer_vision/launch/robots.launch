@@ -1,5 +1,9 @@
 <launch>
   <!-- Launch different robots on two teams -->
+
+  <param name="robot_description"
+    command="$(find xacro)/xacro '$(find neato_description)/urdf/neato_standalone.urdf.xacro' load_camera:=true use_gpu_laser:=true" />
+
   <param name="team_one_robot_description"
     command="$(find xacro)/xacro.py $(find turtlebot_description)/robots/kobuki_hexagons_asus_xtion_pro.urdf.xacro" />
 
