@@ -54,4 +54,4 @@ class TeamOneActor(object):
 
 if __name__ == '__main__':
     rospy.init_node('Team1_Robot' + sys.argv[1])
-    TeamOneActor("/camera/rgb/image_raw", int(sys.argv[1])).run()
+    TeamOneActor("/camera/image_raw", int(sys.argv[1])).run()

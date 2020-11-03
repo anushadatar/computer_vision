@@ -4,9 +4,6 @@
   <param name="robot_description"
     command="$(find xacro)/xacro '$(find neato_description)/urdf/neato_standalone.urdf.xacro' load_camera:=true use_gpu_laser:=true" />
 
-  <param name="kobuki"
-    command="$(find xacro)/xacro.py $(find turtlebot_description)/robots/kobuki_hexagons_asus_xtion_pro.urdf.xacro" />
-
   <param name="neato"
     command="$(find xacro)/xacro '$(find neato_description)/urdf/neato_standalone.urdf.xacro' load_camera:=true use_gpu_laser:=true"/>
 
