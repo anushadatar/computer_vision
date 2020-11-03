@@ -22,13 +22,14 @@ class TeamOneActor(object):
         """
         self.robot_number = robot_number
         self.cv_image = None
+        self.binary_image = None
         self.bridge = CvBridge()
 
         member_image_topic = "/robot1_" + str(robot_number) + image_topic
         print(member_image_topic)
 
         rospy.Subscriber(member_image_topic, Image, self.process_image)
-        # self.vel_pub = rospy.Publisher('cmd_vel', Twist, queue_size=10)
+        self.vel_pub = rospy.Publisher('cmd_vel', Twist, queue_size=10)
 
         cv2.namedWindow('TEAM ONE: ROBOT ' + str(robot_number))
 

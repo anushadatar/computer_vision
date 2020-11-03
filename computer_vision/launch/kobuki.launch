@@ -21,6 +21,7 @@
     <param name="angular_vel_max"  value="6.6"  type="double"/>
     <param name="wait_for_connection_" value="true" type="bool"/>
   </node>
+  
   <node pkg="nodelet" type="nodelet" name="mobile_base_nodelet_manager" args="manager"/>
   
     <!-- The odometry estimator, throttling, fake laser etc. go here -->
