@@ -31,7 +31,7 @@ class TeamOneActor(object):
         rospy.Subscriber(member_image_topic, Image, self.process_image)
         self.vel_pub = rospy.Publisher('cmd_vel', Twist, queue_size=10)
 
-        cv2.namedWindow('TEAM ONE: ROBOT ' + str(robot_number))
+        cv2.namedWindow('TEAM ONE (BLUE): ROBOT ' + str(robot_number))
 
     def process_image(self, msg):
         """ 
@@ -39,6 +39,15 @@ class TeamOneActor(object):
         Stores incoming image data and processes it when possible.
         """
         self.cv_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding="bgr8")
+        self.seek_blue_ball()
+
+    def seek_blue_ball(self):
+        """
+        TODO This is using the track image code from neato soccer, we would want to seed with our 
+        like proposed algorithm and values/
+        """
+        self.hsv_image = cv2.cvtColor(self.cv_image, cv2.COLOR_BGR2HSV)
+        self.binary_image = cv2.inRange(self.hsv_image, (40, 120, 100), (65, 256, 256))
 
     def run(self):
         """
@@ -47,7 +56,7 @@ class TeamOneActor(object):
         r = rospy.Rate(5)
         while not rospy.is_shutdown():
             if self.cv_image is not None: 
-                cv2.imshow('TEAM ONE: ROBOT ' + str(self.robot_number), self.cv_image)
+                cv2.imshow('TEAM ONE (BLUE): ROBOT ' + str(self.robot_number), self.cv_image)
                 cv2.waitKey(5)
             r.sleep()
 
