@@ -24,6 +24,11 @@ class TeamTwoActor(object):
         self.cv_image = None
         self.binary_image = None
         self.bridge = CvBridge()
+        self.x_mean = 0
+        self.x_values = 0
+        self.minimum_data_points = 10
+        self.kp_angle = 2
+        self.linear_velocity = .2
 
         member_image_topic = "/robot2_" + str(robot_number) + image_topic
         print(member_image_topic)
@@ -32,6 +37,8 @@ class TeamTwoActor(object):
         self.vel_pub = rospy.Publisher('cmd_vel', Twist, queue_size=10)
 
         cv2.namedWindow('TEAM TWO (RED): ROBOT ' + str(robot_number))
+
+
 
     def process_image(self, msg):
         """ 
@@ -48,6 +55,17 @@ class TeamTwoActor(object):
         """
         self.hsv_image = cv2.cvtColor(self.cv_image, cv2.COLOR_BGR2HSV)
         self.binary_image = cv2.inRange(self.hsv_image, (40, 120, 100), (65, 256, 256))
+#        self.binary_image = cv2.inRange(self.hsv_image, (40, 120, 100), (65, 256, 256))
+
+        moments = cv2.moments(self.binary_image, binaryImage=True)
+        if moments['m00'] >= self.minimum_data_points:
+            shape = self.cv_image.shape
+            self.x_values = moments['m10'] / moments['m00']
+            self.x_mean = (self.x_values / shape[1]) - 0.5
+            # Drive the motors based on the proximity of the item.
+            angular_velocity = -self.kp_angle * self.x_mean
+            self.vel_pub.publish(Twist(linear=Vector3(x=self.linear_velocity), angular=Vector3(z=angular_velocity)))
+
 
     def run(self):
         """
