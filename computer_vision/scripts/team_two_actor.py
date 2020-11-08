@@ -14,12 +14,14 @@ import sys
 
 class TeamTwoActor(object):
     """
-    Tracks objects in the view of the robot.
+    TODO Update docstring if CV problem solved changes.
+    Team two robot, which (currently) pushes red balls towards the goal.
     """
 
     def __init__(self, image_topic, robot_number):
         """ 
         TODO  docstring
+        TODO Attribute comments
         """
         self.robot_number = robot_number
         self.cv_image = None
@@ -35,15 +37,12 @@ class TeamTwoActor(object):
         member_image_topic = "/robot2_" + str(robot_number) + image_topic
         rospy.Subscriber(member_image_topic, Image, self.process_image)
         velocity_publisher = '/robot2_' + str(robot_number) + '/cmd_vel'
-        print(velocity_publisher)
         self.vel_pub = rospy.Publisher(velocity_publisher, Twist, queue_size=10)
-        self.vel_pub_2 = rospy.Publisher('cmd_vel', Twist, queue_size=10)
         window_name = 'TEAM TWO (RED): ROBOT ' + str(robot_number)
         cv2.namedWindow(window_name)
-        if debug:
+        if self.debug:
             cv2.setMouseCallback(window_name, self.process_mouse_event)
-
-
+ 
     def process_mouse_event(self, event, x,y,flags,param):
         """ 
         Process mouse events so that you can see the color values
@@ -75,7 +74,6 @@ class TeamTwoActor(object):
         """
         self.hsv_image = cv2.cvtColor(self.cv_image, cv2.COLOR_BGR2HSV)
         self.binary_image = cv2.inRange(self.hsv_image, (0, 120, 100), (30, 256, 256))
-#        self.binary_image = cv2.inRange(self.hsv_image, (40, 120, 100), (27, 256, 256))
 
         moments = cv2.moments(self.binary_image, binaryImage=True)
         if moments['m00'] >= self.minimum_data_points:

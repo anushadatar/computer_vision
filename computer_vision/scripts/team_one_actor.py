@@ -19,6 +19,7 @@ class TeamOneActor(object):
     def __init__(self, image_topic, robot_number):
         """ 
         TODO  docstring
+        TODO Attribute comments
         """
         self.robot_number = robot_number
         self.cv_image = None
@@ -29,15 +30,34 @@ class TeamOneActor(object):
         self.minimum_data_points = 10
         self.kp_angle = 2
         self.linear_velocity = .2
-
+        self.debug = True
 
         member_image_topic = "/robot1_" + str(robot_number) + image_topic
-        print(member_image_topic)
-
         rospy.Subscriber(member_image_topic, Image, self.process_image)
-        self.vel_pub = rospy.Publisher('cmd_vel', Twist, queue_size=10)
+        print(member_image_topic)
+        velocity_publisher = '/robot1_' + str(robot_number) + '/cmd_vel'
+        self.vel_pub = rospy.Publisher(velocity_publisher, Twist, queue_size=10)
+        window_name = 'TEAM ONE (BLUE): ROBOT ' + str(robot_number)
+        cv2.namedWindow(window_name)
+        if self.debug:
+            cv2.setMouseCallback(window_name, self.process_mouse_event)
 
-        cv2.namedWindow('TEAM ONE (BLUE): ROBOT ' + str(robot_number))
+    def process_mouse_event(self, event, x,y,flags,param):
+        """ 
+        Process mouse events so that you can see the color values
+        associated with a particular pixel in the camera images. Useful in debug mode.
+        """
+        image_info_window = 255*np.ones((500,500,3))
+        cv2.putText(image_info_window,
+                    'Color (b=%d,g=%d,r=%d)' % (self.cv_image[y,x,0], self.cv_image[y,x,1], self.cv_image[y,x,2]),
+                    (5,50),
+                    cv2.FONT_HERSHEY_SIMPLEX,
+                    1,
+                    (0,0,0))
+
+        cv2.imshow('image_info', image_info_window)
+        cv2.waitKey(5)
+
 
     def process_image(self, msg):
         """ 
@@ -53,7 +73,7 @@ class TeamOneActor(object):
         like proposed algorithm and values/
         """
         self.hsv_image = cv2.cvtColor(self.cv_image, cv2.COLOR_BGR2HSV)
-        self.binary_image = cv2.inRange(self.hsv_image, (40, 120, 100), (65, 256, 256))
+        self.binary_image = cv2.inRange(self.hsv_image, (100, 120, 110), (130, 256, 256))
 
         moments = cv2.moments(self.binary_image, binaryImage=True)
         if moments['m00'] >= self.minimum_data_points:
@@ -63,6 +83,8 @@ class TeamOneActor(object):
             # Drive the motors based on the proximity of the item.
             angular_velocity = -self.kp_angle * self.x_mean
             self.vel_pub.publish(Twist(linear=Vector3(x=self.linear_velocity), angular=Vector3(z=angular_velocity)))
+            if self.debug:
+                print("Detected object and moving towards it.")
 
 
     def run(self):
