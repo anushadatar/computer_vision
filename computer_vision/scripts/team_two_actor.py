@@ -1,6 +1,5 @@
 """
-TODO Cleanup
-TODO Block comment
+Node associated with controlling a single robot associated with team two.
 """
 import rospy
 from sensor_msgs.msg import Image
@@ -15,62 +14,55 @@ import sys
 class TeamTwoActor(object):
     """
     TODO Update docstring if CV problem solved changes.
-    Team two robot, which (currently) pushes red balls towards the goal.
+    Team two robot, which (currently) pushes the red ball.
     """
 
     def __init__(self, image_topic, robot_number):
         """ 
-        TODO  docstring
-        TODO Attribute comments
+        Initialize a single team two robot.
         """
+        # Which robot number (among team one robots) this instance is.
+        # Specified by command line argument.
         self.robot_number = robot_number
+        # Most recent image.
         self.cv_image = None
+        # Most recent image, as a binary image.
         self.binary_image = None
+        # OpenCV instance associated with this node.
         self.bridge = CvBridge()
+        # X mean for moments calculation.
         self.x_mean = 0
+        # X values for moments calculation.
         self.x_values = 0
+        # Minimum data points necessary for moments calculation.
         self.minimum_data_points = 10
+        # Proportional constant for robot turn angle when tracking.
         self.kp_angle = 2
+        # Default linear velocity for the robot.
         self.linear_velocity = .2
+        # Flag associated with enabling and disabling debug prints.
         self.debug = True
 
-        member_image_topic = "/robot2_" + str(robot_number) + image_topic
-        rospy.Subscriber(member_image_topic, Image, self.process_image)
-        velocity_publisher = '/robot2_' + str(robot_number) + '/cmd_vel'
-        self.vel_pub = rospy.Publisher(velocity_publisher, Twist, queue_size=10)
-        window_name = 'TEAM TWO (RED): ROBOT ' + str(robot_number)
-        cv2.namedWindow(window_name)
-        if self.debug:
-            cv2.setMouseCallback(window_name, self.process_mouse_event)
- 
-    def process_mouse_event(self, event, x,y,flags,param):
-        """ 
-        Process mouse events so that you can see the color values
-        associated with a particular pixel in the camera images. Useful in debug mode.
-        """
-        image_info_window = 255*np.ones((500,500,3))
-        cv2.putText(image_info_window,
-                    'Color (b=%d,g=%d,r=%d)' % (self.cv_image[y,x,0], self.cv_image[y,x,1], self.cv_image[y,x,2]),
-                    (5,50),
-                    cv2.FONT_HERSHEY_SIMPLEX,
-                    1,
-                    (0,0,0))
 
-        cv2.imshow('image_info', image_info_window)
-        cv2.waitKey(5)
+        member_image_topic = "/robot2_" + str(robot_number) + image_topic
+        velocity_publisher = '/robot2_' + str(robot_number) + '/cmd_vel'
+        window_name = 'TEAM TWO (RED): ROBOT ' + str(robot_number)
+
+        rospy.Subscriber(member_image_topic, Image, self.process_image)
+        self.vel_pub = rospy.Publisher(velocity_publisher, Twist, queue_size=10)
+        cv2.namedWindow(window_name)
 
     def process_image(self, msg):
         """ 
-        TODO better docstring
-        Stores incoming image data and processes it when possible.
+        Stores and starts processing of incoming image data.
         """
         self.cv_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding="bgr8")
         self.seek_red_ball()
 
     def seek_red_ball(self):
         """
-        TODO This is using the track image code from neato soccer, we would want to seed with our 
-        like proposed algorithm and values/
+        Search for the red ball in the robot's camera feed. If it is visible,
+        drive towards it and start pushing it.
         """
         self.hsv_image = cv2.cvtColor(self.cv_image, cv2.COLOR_BGR2HSV)
         self.binary_image = cv2.inRange(self.hsv_image, (0, 120, 100), (30, 256, 256))
@@ -88,7 +80,7 @@ class TeamTwoActor(object):
 
     def run(self):
         """
-        TODO
+        Drive towards the red ball and push it.
         """
         r = rospy.Rate(5)
         while not rospy.is_shutdown():
