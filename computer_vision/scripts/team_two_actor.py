@@ -40,9 +40,6 @@ class TeamTwoActor(object):
         self.kp_angle = 2
         # Default linear velocity for the robot.
         self.linear_velocity = .2
-        # Flag associated with enabling and disabling debug prints.
-        self.debug = True
-
 
         member_image_topic = "/robot2_" + str(robot_number) + image_topic
         velocity_publisher = '/robot2_' + str(robot_number) + '/cmd_vel'
@@ -75,8 +72,6 @@ class TeamTwoActor(object):
             # Drive the motors based on the proximity of the item.
             angular_velocity = -self.kp_angle * self.x_mean
             self.vel_pub.publish(Twist(linear=Vector3(x=self.linear_velocity), angular=Vector3(z=angular_velocity)))
-            if self.debug:
-                print("Detected object and moving towards it.")
 
     def run(self):
         """
