@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-TODO Block comment
+Test node associated with color detection.
 """
 import rospy
 from sensor_msgs.msg import Image
@@ -38,8 +38,10 @@ class TrackObject(object):
         self.linear_velocity = .2
 
     def process_mouse_event(self, event, x,y,flags,param):
-        """ Process mouse events so that you can see the color values
-            associated with a particular pixel in the camera images """
+        """
+        Process mouse events so that you can see the color values
+        associated with a particular pixel in the camera images
+        """
         image_info_window = 255*np.ones((500,500,3))
         cv2.putText(image_info_window,
                     'Color (b=%d,g=%d,r=%d)' % (self.cv_image[y,x,0], self.cv_image[y,x,1], self.cv_image[y,x,2]),
