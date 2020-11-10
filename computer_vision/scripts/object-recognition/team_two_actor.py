@@ -91,5 +91,5 @@ class ImageRecognitionTestNode():
             rospy.spin()
 
 if __name__ == '__main__':
-    rospy.init_node('Team_One_Image_Recognition' + sys.argv[1])
+    rospy.init_node('Team_Two_Image_Recognition' + sys.argv[1])
     ImageRecognitionTestNode("/camera/image_raw", int(sys.argv[1])).run()
