@@ -16,7 +16,7 @@ from std_msgs.msg import String
 
 import image_classifier
 
-class ImageRecognitionTestNode():
+class TeamTwoImageRecognition():
     """
     TODO
     """
@@ -24,30 +24,41 @@ class ImageRecognitionTestNode():
         """
         TODO docstring
         """
-        # TODO attribute comments
+        ## Initialize image classification algorithm and associated constants.
+        # Download and cofnigure model.
         image_classifier.dowload_model()
+        # Tensorflow session.
         self._session = tf.compat.v1.Session()
+        # Initialize image classification graphdef.
         image_classifier.create_graph()
-
+        # OpenCV bridge instance.
         self._cv_bridge = CvBridge()
+        # Store most recent image store from the robot's camera feed.
         self.cv_image = None
+        # Minimum score above which to consider potential classifications.
         self.score_threshold = .1
+        # Number of potential classifications to consider.
         self.number_of_best_values = 5
 
-        self.robot_number = robot_number        
-        image_topic = image_topic
+        # Which robot number (among team one robots) this instance is.
+        # Specified by command line argument.
+        self.robot_number = robot_number     
+        # Subscribe to the ROS topic associated with robot's camera feed.
         member_image_topic = "/robot2_" + str(robot_number) + image_topic
         rospy.Subscriber(member_image_topic, Image, self.process_image)
+        # Publish to the robot's velocity topic.
         velocity_publisher = '/robot2_' + str(robot_number) + '/cmd_vel'
         self.vel_pub = rospy.Publisher(velocity_publisher, Twist, queue_size=10)
-        # TODO This should probably index by robot number too        
-        # Debug publisher for results, use rostopic echo robot2_classifier_output to see results.
-        self.debug_pub = rospy.Publisher('/robot2_classifier_output', String, queue_size=1)
+        # TODO This should probably index by robot number too
+        # Debug publisher for results, use rostopic echo robot1_classifier_output to see results.
+        member_debug_topic = '/robot2_' + str(robot_number) + 'classifier_output'
+        self.debug_pub = rospy.Publisher(member_debug_topic, String, queue_size=1)
+        # Whether or not to run in DEBUG mode.
         self.debug = True
-        # TODO This does not super work as expected.
+        # TODO This does not super work as expected for showing the image, also name should change to
+        # reflect chosen object to detect.
         window_name = 'TEAM ONE (BLUE): ROBOT ' + str(robot_number)        
         cv2.namedWindow(window_name)
-
 
     def process_image(self, image_msg):
         """
@@ -92,4 +103,4 @@ class ImageRecognitionTestNode():
 
 if __name__ == '__main__':
     rospy.init_node('Team_Two_Image_Recognition' + sys.argv[1])
-    ImageRecognitionTestNode("/camera/image_raw", int(sys.argv[1])).run()
+    TeamTwoImageRecognition("/camera/image_raw", int(sys.argv[1])).run()
