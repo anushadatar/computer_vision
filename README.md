@@ -14,7 +14,7 @@ chmod u+x <all scripts>
 ## Goal
 Our original objective was to involve multiple robots and detect features unique to each one, namely faces, on attached signs. We ran into a variety of hurdles implementing this, primarily in manipulating the structure of each neato model towards a non-trivial CV problem, so we split up our project into two modules. 
 
-Our first work uses basic color recognition and contour detection techniques in its application of CV, but involves multiple robots needing to make non-obvious choices about which directions to move in based on this information. We then turned our attention to integrating advanced image detection models into our control of the robot, using Tensorflow to identify specific, real-world objects in Gazebo, and moving a Neato around based on detection output.
+Our first work uses basic color and contour detection techniques in its application of CV, but involves multiple robots needing to make non-obvious choices about which directions to move in based on this information. We then turned our attention to integrating advanced image detection models into our control of the robot, using Tensorflow to identify specific, real-world objects in Gazebo, and moving a Neato around based on detection output.
 
 ## Architecture and Solution
 
@@ -23,12 +23,12 @@ The goal of this project was to assign robots respective colors of balls, and li
 
 This is the field our robots start in, with two colors of balls.
 
-![Field](assets/color-recognition/field)
+![Field](assets/color-detection/field)
 
 Here are some examples of successful shots.
 
-![Goal View](assets/color-recognition/goal_view.gif)
-![Successful Shot](assets/color-recognition/shot_success.gif)
+![Goal View](assets/color-detection/goal_view.gif)
+![Successful Shot](assets/color-detection/shot_success.gif)
 
 
 ## Design Decisions
