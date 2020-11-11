@@ -50,7 +50,7 @@ However, if the correct ball and goal are never visible on the same frame, the m
 ##### Description
 The robot recognizes objects in front of it in the Gazebo world it is located in. If the object in front of it is part of its list of objects to stop for, it stops in front of the object. Otherwise, it continues to move forward.
 ##### Implementation
-The object recognition algorithm uses the Tensorflow implementaiton of the [Inception model](https://www.tensorflow.org/api_docs/python/tf/keras/applications/InceptionV3) trained on the [ImageNet dataset](http://www.image-net.org/) to classify objects visible in the robot's camera feed. The robot leverages a pre-trained model to quickly classify visible objects and converts the node IDs associated with its conclusions to descriptive strings. 
+The object recognition algorithm uses the Tensorflow implementation of the [Inception model](https://www.tensorflow.org/api_docs/python/tf/keras/applications/InceptionV3) trained on the [ImageNet dataset](http://www.image-net.org/) to classify objects visible in the robot's camera feed. The robot leverages a pre-trained model to quickly classify visible objects and converts the node IDs associated with its conclusions to descriptive strings. 
 ![Image Recognition](assets/object-recognition/imagenet_screenshot.png)
 
 ## Design Decisions
@@ -73,4 +73,3 @@ We also invested quite a bit of time and energy into exploring different ways to
 ### Key Takeaways
 - **Computer Vision Challenges**: While CV is an incredibly powerful tool for robots, the presence of very few/unreliable markers can make seemingly simple problems rather complex. This was an issue particularly for taking a non-linear shot on goal, as accomplishing the task sometimes requires losing tracking of the goal.
 - **Tooling and Planning**: We spent a lot of time working with Gazebo and Tensorflow instead of with computer vision algorithms. In the future, we can plan our projects such that we can prioritize the learnings we want to invest more time in. We also pivoted multiple times over the course of this project; while this is not necessarily bad, there was a lot of ramp-up overhead and work that did not make it to the final repository. 
-- 
