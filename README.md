@@ -23,12 +23,12 @@ The goal of this project was to assign robots respective colors of balls, and li
 
 This is the field our robots start in, with two colors of balls.
 
-![Field](/computer_vision/assets/color-recognition/field)
+![Field](assets/color-recognition/field)
 
 Here are some examples of successful shots.
 
-![Goal View](/computer_vision/assets/color-recognition/goal_view.gif)
-![Successful Shot](/computer_vision/assets/color-recognition/shot_success.gif)
+![Goal View](assets/color-recognition/goal_view.gif)
+![Successful Shot](assets/color-recognition/shot_success.gif)
 
 
 ## Design Decisions
