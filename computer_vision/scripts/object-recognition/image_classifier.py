@@ -1,9 +1,8 @@
 """
 Use tensorflow imagenet model to quickly recognize images. Contains classes
 associated with the model itself and object name lookup.
-Directly adapted from tensorflow tutorial for imagenet classification.
-TODO Clean this up, remove only what is needed. Also document it.
-THis is still pretty close to the tutorial in its content.
+Directly adapted from tensorflow tutorial for imagenet classification, which
+falls under an Apache 2.0 license.
 """
 import argparse
 import os.path
@@ -27,11 +26,10 @@ class NodeLookup(object):
   """
   Converts IDs associated with Imagenet output to strings.
   Adapated from from tensorflow imagenet tutorial, which is held under the Apache license.
-  TODO document, remove what's not necessary 
   """
   def __init__(self, label_lookup_path=None, uid_lookup_path=None):
     """
-    TODO
+    Initialize node lookup object with label lookup and uid lookup paths.
     """
     if not label_lookup_path:
       label_lookup_path = os.path.join(
