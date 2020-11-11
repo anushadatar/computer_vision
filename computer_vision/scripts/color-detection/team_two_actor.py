@@ -1,23 +1,22 @@
 """
-Node associated with controlling a single robot associated with team one.
+Node associated with controlling a team two actor, which finds the red ball
+and attempts to shoot it into the goal.
 """
 import rospy
-from sensor_msgs.msg import Image
-from neato_node.msg import Bump
 from copy import deepcopy
-from cv_bridge import CvBridge
 import cv2
 import numpy as np
-from geometry_msgs.msg import Twist, Vector3
-
 import sys
 
+from cv_bridge import CvBridge
+from geometry_msgs.msg import Twist, Vector3
+from neato_node.msg import Bump
+from sensor_msgs.msg import Image
 
 class TeamTwoActor(object):
     """
     Attempt to shoot the red ball into a goal on the field.
     """
-
     def __init__(self, image_topic, robot_number):
         """
         Initialize a single team one robot.
@@ -47,12 +46,11 @@ class TeamTwoActor(object):
         self.linear_velocity = .3
         # Flag associated with enabling and disabling debug prints.
         self.debug = True
-
+        
+        #Initialize publishers, subscriber, and image window.
         member_image_topic = "/robot2_" + str(robot_number) + image_topic
         velocity_publisher = '/robot2_' + str(robot_number) + '/cmd_vel'
-
         window_name = 'TEAM TWO (RED): ROBOT ' + str(robot_number)
-
         rospy.Subscriber(member_image_topic, Image, self.process_image)
         self.vel_pub = rospy.Publisher(
             velocity_publisher, Twist, queue_size=10)
@@ -73,15 +71,15 @@ class TeamTwoActor(object):
         self.ball_binary_image = cv2.inRange(
             self.hsv_image, (0, 120, 100), (30, 256, 256))
 
-        # Make annotations, determine flag
+        # Make annotations, determine flag for shot on goal.
         self.annotate_contours()
 
-        # Navigate robot towards a shot on goal
+        # Navigate robot towards a shot on goal.
         self.seek_binary(self.ball_binary_image, self.goal_binary_image)
 
     def annotate_contours(self):
         """
-        Visualizes detected objects on bot camera view using binaries
+        Visualizes detected objects on bot camera view using binary image.
         """
         goal_contours = cv2.findContours(
             self.goal_binary_image,
@@ -109,7 +107,7 @@ class TeamTwoActor(object):
 
     def seek_binary(self, ball_binary, goal_binary):
         """
-        Attempt to drive the object detected from ball_binary into the center of the goal_binary detection
+        Attempt to drive the object detected from ball_binary into the center of the goal_binary detection.
         """
         # Calculate moments of ball binary and goal binary
         ball_moments = cv2.moments(ball_binary, binaryImage=True)
@@ -158,7 +156,6 @@ class TeamTwoActor(object):
                            str(self.robot_number), self.cv_annotated)
                 cv2.waitKey(5)
             r.sleep()
-
 
 if __name__ == '__main__':
     rospy.init_node('Team2_Robot' + sys.argv[1])

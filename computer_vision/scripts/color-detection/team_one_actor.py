@@ -1,5 +1,6 @@
 """
-Node associated with controlling a single robot associated with team one.
+Node associated with controlling a team one actor, which finds the blue ball
+and attempts to shoot it into the goal.
 """
 import rospy
 from sensor_msgs.msg import Image
@@ -17,7 +18,6 @@ class TeamOneActor(object):
     """
     Attempt to shoot the blue ball into a goal on the field.
     """
-
     def __init__(self, image_topic, robot_number):
         """
         Initialize a single team one robot.
@@ -50,9 +50,7 @@ class TeamOneActor(object):
 
         member_image_topic = "/robot1_" + str(robot_number) + image_topic
         velocity_publisher = '/robot1_' + str(robot_number) + '/cmd_vel'
-
         window_name = 'TEAM ONE (BLUE): ROBOT ' + str(robot_number)
-
         rospy.Subscriber(member_image_topic, Image, self.process_image)
         self.vel_pub = rospy.Publisher(
             velocity_publisher, Twist, queue_size=10)
