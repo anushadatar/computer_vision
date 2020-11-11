@@ -28,7 +28,7 @@ class TeamTwoImageRecognition():
         # Download and cofnigure model.
         image_classifier.dowload_model()
         # Tensorflow session.
-        self._session = tf.compat.v1.Session()
+        self._session = tf.Session()
         # Initialize image classification graphdef.
         image_classifier.create_graph()
         # OpenCV bridge instance.
