@@ -19,7 +19,16 @@ Our first work uses basic color recognition and contour detection techniques in 
 ## Architecture and Solution
 
 #### Color Recognition
+The goal of this project was to assign robots respective colors of balls, and line them up to shoot their balls into yellow goals on a field. When balls are not readily directly between a robot and a goal, this mission becomes particularly interesting.
 
+This is the field our robots start in, with two colors of balls.
+
+![Field](/assets/color-recognition/field)
+
+Here are some examples of successful shots.
+
+![Goal View](/assets/color-recognition/goal_view.gif)
+![Successful Shot](/assets/color-recognition/shot_success.gif)
 
 
 ## Design Decisions
