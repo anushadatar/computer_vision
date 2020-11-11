@@ -3,7 +3,7 @@
 
 ## Setup
 
-May need to look through launch scripts to fix python version.
+May need to look through launch scripts to fix python version. In either the color-detection or object-recognition folders, run the following:
 ```
 sudo apt-get install ros-<distrib>-gazebo-ros ros-<distrib>-turtlebot
 chmod u+x <all scripts>
@@ -12,10 +12,15 @@ chmod u+x <all scripts>
 ```
 
 ## Goal
-What was the goal of your project? Since everyone is doing a different project, you will have to spend some time setting this context.
+Our original objective was to involve multiple robots and detect features unique to each one, namely faces, on attached signs. We ran into a variety of hurdles implementing this, primarily in manipulating the structure of each neato model towards a non-trivial CV problem, so we split up our project into two modules. 
+
+Our first work uses basic color recognition and contour detection techniques in its application of CV, but involves multiple robots needing to make non-obvious choices about which directions to move in based on this information. We then turned our attention to integrating advanced image detection models into our control of the robot, using Tensorflow to identify specific, real-world objects in Gazebo, and moving a Neato around based on detection output.
 
 ## Architecture and Solution
-How did you solve the problem (i.e., what methods / algorithms did you use and how do they work)? As above, since not everyone will be familiar with the algorithms you have chosen, you will need to spend some time explaining what you did and how everything works.
+
+#### Color Recognition
+
+
 
 ## Design Decisions
 Describe a design decision you had to make when working on your project and what you ultimately did (and why)? These design decisions could be particular choices for how you implemented some part of an algorithm or perhaps a decision regarding which of two external packages to use in your project.
