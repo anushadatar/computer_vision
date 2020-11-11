@@ -1,5 +1,6 @@
 # FA20 Computational Robotics: Computer Vision
 *Anusha Datar and Siddharth Garimella*
+[Slides](https://docs.google.com/presentation/d/1nPLtq9eyAMEVSnmMnp5jCFqk2ZzJbMADbzZNVc6cvLE/edit?usp=sharing)
 
 ## Setup
 
