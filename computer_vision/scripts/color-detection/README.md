@@ -1,3 +1,4 @@
+# Color Detection
 This directory contains a robot configuration where the team one actor seeks
 the blue ball and the team one actor seeks the red ball. After finding the ball
 associatd with its team, both robots attempt to shoot their balls into detected 
