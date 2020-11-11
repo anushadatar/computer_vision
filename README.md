@@ -1,5 +1,6 @@
 # FA20 Computational Robotics: Computer Vision
 *Anusha Datar and Siddharth Garimella*
+[Slides](https://docs.google.com/presentation/d/1nPLtq9eyAMEVSnmMnp5jCFqk2ZzJbMADbzZNVc6cvLE/edit?usp=sharing)
 
 ## Setup
 
@@ -50,7 +51,7 @@ The robot recognizes objects in front of it
 The object recognition algorithm uses the Tensorflow implementaiton of the [Inception model](https://www.tensorflow.org/api_docs/python/tf/keras/applications/InceptionV3) trained on the [ImageNet dataset](http://www.image-net.org/) to classify objects visible in the robot's camera feed. The robot leverages a pre-trained model to quickly classify visible objects and converts the node IDs associated with its conclusions to descriptive strings. 
 
 ## Design Decisions
-Describe a design decision you had to make when working on your project and what you ultimately did (and why)? These design decisions could be particular choices for how you implemented some part of an algorithm or perhaps a decision regarding which of two external packages to use in your project.
+The most prominent decision we made was splitting our original objective of feature recognition on the robots themselves up into two very different problems. This allowed us to maximize our learnings in different areas, with color-detection using a simple CV operation in a complicated way, and object-recognition using a complicated CV operation in a simple way.
 
 ## Reflection
 
@@ -62,4 +63,4 @@ Describe a design decision you had to make when working on your project and what
 - There are a variety of "reset" routines that could be added to our color-detection module, that return the robot to an original, striking position (from which both a ball and the goal are visible) in the event tracking is lost
 
 ### Key Takeaways
-- While CV is an incredibly powerful tool for robots, unreliable markers can make seemingly simple problems rather complex. This was an issue particularly for taking a non-linear shot on goal, as accomplishing the task sometimes requires losing tracking of the goal.
+- While CV is an incredibly powerful tool for robots, the presence of very few/unreliable markers can make seemingly simple problems rather complex. This was an issue particularly for taking a non-linear shot on goal, as accomplishing the task sometimes requires losing tracking of the goal.
