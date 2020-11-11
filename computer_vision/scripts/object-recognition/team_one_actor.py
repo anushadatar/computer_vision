@@ -28,7 +28,7 @@ class TeamOneImageRecognition():
         # Download and cofnigure model.
         image_classifier.dowload_model()
         # Tensorflow session.
-        self._session = tf.Session()
+        self._session = tf.compat.v1.Session()
         # Initialize image classification graphdef.
         image_classifier.create_graph()
         # OpenCV bridge instance.
@@ -39,6 +39,12 @@ class TeamOneImageRecognition():
         self.score_threshold = .1
         # Number of potential classifications to consider.
         self.number_of_best_values = 5
+        # Linear velocity to go forward at when specified object not visible.
+        self.linear_velocity = .2
+        # List of items to stop for.
+        self.items = ["stoplight"]
+        # The velocity message associated with robot movement.
+        self.vel_message = Twist(linear=Vector3(x=self.linear_velocity))
 
         # Which robot number (among team one robots) this instance is.
         # Specified by command line argument.
@@ -49,16 +55,11 @@ class TeamOneImageRecognition():
         # Publish to the robot's velocity topic.
         velocity_publisher = '/robot1_' + str(robot_number) + '/cmd_vel'
         self.vel_pub = rospy.Publisher(velocity_publisher, Twist, queue_size=10)
-        # TODO This should probably index by robot number too
-        # Debug publisher for results, use rostopic echo robot1_classifier_output to see results.
-        member_debug_topic = '/robot1_' + str(robot_number) + 'classifier_output'
+        # Debug publisher for results, use rostopic echo robot1_ROBOTNUMBER_classifier_output to see results.
+        member_debug_topic = '/robot2_' + str(robot_number) + '_classifier_output'
         self.debug_pub = rospy.Publisher(member_debug_topic, String, queue_size=1)
         # Whether or not to run in DEBUG mode.
         self.debug = True
-        # TODO This does not super work as expected for showing the image, also name should change to
-        # reflect chosen object to detect.
-        window_name = 'TEAM ONE (BLUE): ROBOT ' + str(robot_number)        
-        cv2.namedWindow(window_name)
 
     def process_image(self, image_msg):
         """
@@ -80,9 +81,13 @@ class TeamOneImageRecognition():
                 rospy.loginfo('%s (score = %.5f)' % (descriptive_string, item_score))
                 if self.debug:  
                     self.debug_pub.publish(descriptive_string)
-            else:
-                if self.debug:
-                    print("Did not find any matching images.")
+                found_item = False
+                for item in self.items:
+                    if item in descriptive_string:
+                        self.vel_message = Twist()
+                        found_item = True
+                    if not found_item:
+                        self.vel_message = Twist(linear=Vector3(x=self.linear_velocity))
 
     def run(self):
         """
@@ -91,8 +96,10 @@ class TeamOneImageRecognition():
         r = rospy.Rate(5)
         while not rospy.is_shutdown():
             if self.cv_image is not None: 
-                cv2.imshow('TEAM ONE (BLUE): ROBOT ' + str(self.robot_number), self.cv_image)
+                cv2.imshow('TEAM ONE ROBOT ' + str(self.robot_number), self.cv_image)
                 cv2.waitKey(5)
+                self.vel_pub.publish(self.vel_message)
+            
             r.sleep()
             rospy.spin()
 

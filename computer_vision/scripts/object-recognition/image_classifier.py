@@ -47,13 +47,13 @@ class NodeLookup(object):
     Returns: dict from integer node ID to human-readable string.
     """
     # Check that the both set sof files exist.
-    if not tf.gfile.Exists(uid_lookup_path):
+    if not tf.io.gfile.exists(uid_lookup_path):
       tf.logging.fatal('File does not exist %s', uid_lookup_path)
-    if not tf.gfile.Exists(label_lookup_path):
+    if not tf.io.gfile.exists(label_lookup_path):
       tf.logging.fatal('File does not exist %s', label_lookup_path)
 
     # Parse descriptive output
-    as_ascii_lines = tf.gfile.GFile(uid_lookup_path).readlines()
+    as_ascii_lines = tf.io.gfile.GFile(uid_lookup_path).readlines()
     uid_to_descriptive_string = {}
     expression = re.compile(r'[n\d]*[ \S,]*')
     for ascii_line in as_ascii_lines:
@@ -64,7 +64,7 @@ class NodeLookup(object):
 
     # Map strings to IDs.
     node_id_to_uid = {}
-    proto_as_ascii = tf.gfile.GFile(label_lookup_path).readlines()
+    proto_as_ascii = tf.io.gfile.GFile(label_lookup_path).readlines()
     for line in proto_as_ascii:
       if line.startswith('  target_class:'):
         target_class = int(line.split(': ')[1])
@@ -90,9 +90,9 @@ def create_graph():
   """
   Creates a graph from the saved file graph_def.pb.
   """
-  with tf.gfile.GFile(os.path.join(
+  with tf.io.gfile.GFile(os.path.join(
       MODEL_DIR, 'classify_image_graph_def.pb'), 'rb') as graph_def_file:
-    graph_def = tf.GraphDef()
+    graph_def = tf.compat.v1.GraphDef()
     graph_def.ParseFromString(graph_def_file.read())
     _ = tf.import_graph_def(graph_def, name='')
 
@@ -102,9 +102,9 @@ def run_inference_on_image(image):
   Runs classification on an image.
   image: File name corresponding to the image.
   """
-  if not tf.gfile.Exists(image):
+  if not tf.io.gfile.exists(image):
     tf.logging.fatal('File does not exist %s', image)
-  image_data = tf.gfile.Gfile(image, 'rb').read()
+  image_data = tf.io.gfile.Gfile(image, 'rb').read()
   create_graph()
 
   # Generates and interprets softmax tensor.

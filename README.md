@@ -43,6 +43,12 @@ However, if the correct ball and goal are never visible on the same frame, the m
 
 ![Failed Shot](assets/color-detection/shot_failure.gif)
 
+#### Object Recognition
+##### Description
+The robot recognizes objects in front of it 
+##### Implementation
+The object recognition algorithm uses the Tensorflow implementaiton of the [Inception model](https://www.tensorflow.org/api_docs/python/tf/keras/applications/InceptionV3) trained on the [ImageNet dataset](http://www.image-net.org/) to classify objects visible in the robot's camera feed. The robot leverages a pre-trained model to quickly classify visible objects and converts the node IDs associated with its conclusions to descriptive strings. 
+
 ## Design Decisions
 Describe a design decision you had to make when working on your project and what you ultimately did (and why)? These design decisions could be particular choices for how you implemented some part of an algorithm or perhaps a decision regarding which of two external packages to use in your project.
 
