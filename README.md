@@ -52,6 +52,9 @@ The robot recognizes objects in front of it in the Gazebo world it is located in
 ##### Implementation
 The object recognition algorithm uses the Tensorflow implementation of the [Inception model](https://www.tensorflow.org/api_docs/python/tf/keras/applications/InceptionV3) trained on the [ImageNet dataset](http://www.image-net.org/) to classify objects visible in the robot's camera feed. The robot leverages a pre-trained model to quickly classify visible objects and converts the node IDs associated with its conclusions to descriptive strings. 
 ![Image Recognition](assets/object-recognition/imagenet_screenshot.png)
+It then parses the descriptive strings to search for any specified key words to stop for and control the motion of the robot accordingly.
+![Robot Motion Demo](assets/object-recognition/object-recognition-demo.gif)
+
 
 ## Design Decisions
 The most prominent decision we made was splitting our original objective of feature recognition on the robots themselves up into two very different problems with in two different repositories. This allowed us to maximize our learnings in different areas, with color-detection using a simple CV operation in a complicated way, and object-recognition using a complicated CV operation in a simple way. While we started exploring object detection to understand how to combine these two behaviors, keeping them separate for as long as possible helped us make sure we could continue to develop new features on different aspects of the program even when blocked elsewhere.
