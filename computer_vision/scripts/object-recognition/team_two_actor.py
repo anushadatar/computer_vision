@@ -63,12 +63,12 @@ class ImageRecognitionTestNode():
         node_lookup = image_classifier.NodeLookup()
         best_values = predictions.argsort()[-self.number_of_best_values:][::-1]
         for node in best_values:
-            translated_string = node_lookup.id_to_string(node)
+            descriptive_string = node_lookup.id_to_string(node)
             item_score = predictions[node]
             if item_score > self.score_threshold:
-                rospy.loginfo('%s (score = %.5f)' % (translated_string, item_score))
+                rospy.loginfo('%s (score = %.5f)' % (descriptive_string, item_score))
                 if self.debug:  
-                    self.debug_pub.publish(translated_string)
+                    self.debug_pub.publish(descriptive_string)
                 # TODO Here is probably where we want to add the image recognition words
                 # we want to track and the controller logic.
                 # We can find that logic in the color-detection/team-one-actor.
