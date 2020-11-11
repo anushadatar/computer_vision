@@ -1,7 +1,5 @@
 """
-Team one image recognition node.
-TODO This still needs a specific CV task
-TODO this also still needs documentation 
+Team two image recognition node.
 """
 from cv_bridge import CvBridge
 import cv2
@@ -18,11 +16,11 @@ import image_classifier
 
 class TeamTwoImageRecognition():
     """
-    TODO
+    Run image recognition using the team two robot.
     """
     def __init__(self, image_topic, robot_number):
         """
-        TODO docstring
+        Initialize image classification algorithm and ROS publishers and subscribers.
         """
         ## Initialize image classification algorithm and associated constants.
         # Download and cofnigure model.
@@ -62,7 +60,7 @@ class TeamTwoImageRecognition():
 
     def process_image(self, image_msg):
         """
-        TODO 
+        Run image classification on images captured from the robot camera feed. 
         """
         self.cv_image = self._cv_bridge.imgmsg_to_cv2(image_msg, "bgr8")
         data = cv2.imencode('.jpg', self.cv_image)[1].tostring()
@@ -80,23 +78,18 @@ class TeamTwoImageRecognition():
                 rospy.loginfo('%s (score = %.5f)' % (descriptive_string, item_score))
                 if self.debug:  
                     self.debug_pub.publish(descriptive_string)
-                # TODO Here is probably where we want to add the image recognition words
-                # we want to track and the controller logic.
-                # We can find that logic in the color-detection/team-one-actor.
             else:
                 if self.debug:
                     print("Did not find any matching images.")
 
     def run(self):
         """
-        Drive towards the blue ball and push it.
-        TODO
+        Capture images and classify their contents using the imagenet model.
         """
         r = rospy.Rate(5)
         while not rospy.is_shutdown():
             if self.cv_image is not None: 
-                # TODO This window does not quite show up as expected.
-                cv2.imshow('TEAM ONE (BLUE): ROBOT ' + str(self.robot_number), self.cv_image)
+                cv2.imshow('TEAM TWO (RED): ROBOT ' + str(self.robot_number), self.cv_image)
                 cv2.waitKey(5)
             r.sleep()
             rospy.spin()
