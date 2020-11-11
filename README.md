@@ -44,7 +44,7 @@ However, if the correct ball and goal are never visible on the same frame, the m
 ![Failed Shot](assets/color-detection/shot_failure.gif)
 
 ## Design Decisions
-Describe a design decision you had to make when working on your project and what you ultimately did (and why)? These design decisions could be particular choices for how you implemented some part of an algorithm or perhaps a decision regarding which of two external packages to use in your project.
+The most prominent decision we made was splitting our original objective of feature recognition on the robots themselves up into two very different problems. This allowed us to maximize our learnings in different areas, with color-detection using a simple CV operation in a complicated way, and object-recognition using a complicated CV operation in a simple way.
 
 ## Reflection
 
