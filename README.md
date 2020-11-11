@@ -49,7 +49,7 @@ Describe a design decision you had to make when working on your project and what
 ## Reflection
 
 ### Challenges
-What if any challenges did you face along the way?
+- It's always interesting flattening problems in three dimensions to a camera feed. Certain mathematical operations seem to become incredibly useful after doing so, in our case, finding the centers of contours and angles of attack to get a shot on goal.
 
 ### Further Extensions
 - Given more time, we definitely could've combined both sides of our project into a single, interesting application of computer vision and robot movement
